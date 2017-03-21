@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta http-equiv="Access-Control-Allow-Origin">
+		<meta http-equiv="content-security-policy">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<!--App自定义的css-->
+		<!--<link rel="stylesheet" type="text/css" href="../css/app.css"/>-->
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">折叠面板</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-card">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right" href="#">t1</a>
+						<div class="mui-collapse-content">
+							<form class="mui-input-group">
+								<div class="mui-input-row">
+									<label>Input</label>
+									<input type="text" placeholder="普通输入框">
+								</div>
+								<div class="mui-input-row">
+									<label>Input</label>
+									<input type="text" class="mui-input-clear" placeholder="带清除按钮的输入框">
+								</div>
+
+								<div class="mui-input-row mui-plus-visible">
+									<label>Input</label>
+									<input type="text" class="mui-input-speech mui-input-clear" placeholder="语音输入">
+								</div>
+								<div class="mui-button-row">
+									<button class="mui-btn mui-btn-primary" type="button" onclick="return false;">确认</button>&nbsp;&nbsp;
+									<button class="mui-btn mui-btn-primary" type="button" onclick="mycloser();">取消</button>
+								</div>
+							</form>
+						</div>
+					</li>
+
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right" href="#">dse</a>
+						<div class="mui-collapse-content" id="addtxt">
+							<p>
+								oneoeneoene
+							</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<ul id="ullist" class="mui-table-view mui-table-view-chevron"></ul>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+		</script>
+		<script>
+			function mycloser() {
+				var list = document.getElementById("ullist");
+				mui.getJSON("json/cat.json", null, function(data) {
+					var code = data.back_code;
+					if(code == 200) {
+						var addecah;
+						var fragment = document.createDocumentFragment();
+						mui.each(data.array, function(index, item) {
+							var id = item.id;
+							var name = item.name;
+							console.log(id + name);
+							addecah = document.createElement('li');
+							addecah.className = 'mui-table-view-cell mui-media';
+							addecah.innerHTML = '<a class="mui-navigate-right" id=' + id + '>' +
+								'<div class="mui-media-body">' + name +
+								'</div>' +
+								'</a>';
+							fragment.appendChild(addecah);
+						});
+						list.appendChild(fragment);
+					
+					}
+
+					//					console.log(JSON.stringify(data));
+				});
+				
+					mui("#ullist").on('tap', 'li', function() {
+							var id = this.getAttribute("id");
+							console.log(id);
+						});
+				
+				//				var url = "http://192.168.1.158:7070/UmengPushServer/GoodsQuery/getCat";
+				//				mui.ajax(url, {
+				//					data: {
+				//						storeid: "111114"
+				//					},
+				//					//dataType: 'json', //服务器返回json格式数据
+				//					type: 'get', //HTTP请求类型
+				//					timeout: 1000, //超时时间设置为10秒；
+				//					success: function(data) {
+				//						console.info(data);
+				//					},
+				//					error: function(xhr, type, errorThrown) {
+				//						//异常处理；
+				//						console.log(type);
+				//					}
+				//				});
+			}
+		</script>
+	</body>
+
+</html>
