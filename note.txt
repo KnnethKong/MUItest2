@@ -1,0 +1,388 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
+					<h1 class="mui-title" style="color: #007AFF;">茉莉花店铺</h1>
+		</header>
+		<div class="mui-content" id="addtxt">
+
+			<ul class="mui-table-view" id="table_view">
+				<li class="mui-table-view-cell mui-media">
+					<div class="mui-row">
+						<div class="mui-col-sm-9">
+							<img class="mui-media-object mui-pull-left" src="img/xhscjd.png">
+							<p class='mui-ellipsis'>西红柿炒鸡蛋</p>
+						</div>
+						<div class="mui-col-sm-3">
+							<div class="mui-numbox mui-pull-right" data-numbox-min='0' data-numbox-max='9'>
+								<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+								<input class="mui-input-numbox" type="number" />
+								<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<button class="mui-btn-danger mui-pull-right mui-card-content-inner" onclick="toScale()">去结算</button>
+			<div id="topPopover" class="mui-popover">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a href="#">首页</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="#">订单信息</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="#">设置</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui.init();
+			var tableView = document.getElementById("table_view");
+			var fragment = document.createDocumentFragment();
+			var newline;
+			for(var i = 0; i < 10; i++) {
+				newline = document.createElement('li');
+				newline.setAttribute("class", "mui-table-view-cell mui-media");
+				newline.setAttribute("value", i);
+				var sssss = '<div class="mui-row">' +
+					'<div class="mui-col-sm-9">' +
+					'<img class="mui-media-object mui-pull-left" src="img/xhscjd.png">' +
+					'<div class="mui-media-body">' + (i + "西红柿拆鸡蛋") +
+					'</div></div>' +
+					'<div class="mui-col-sm-3">' +
+					'<div class="mui-numbox mui-pull-right" id=' + i + ' data-numbox-min="0" data-numbox-max="9">' +
+					'<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>' +
+					'<input class="mui-input-numbox" type="number" />' +
+					'<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>' +
+					'</div></div></div>'
+				newline.innerHTML = sssss;
+				fragment.appendChild(newline);
+			}
+
+			tableView.appendChild(fragment);
+			mui('.mui-popover').popover('toggle', document.getElementById("openPopover"));
+			mui('.mui-popover').popover('hide');
+			function toScale() {
+				mui(".mui-content input").each(function(index, item) {
+					var parentview = item.parentElement.id;
+					var num = this.value;
+					if(num > 0)
+						console.log("num:" + num + "  value:" + parentview);
+				});
+
+			}
+		</script>
+	</body>
+
+</html>
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+			.mui-row.mui-fullscreen>[class*="mui-col-"] {
+				height: 100%;
+			}
+			
+			.mui-col-xs-3,
+			.mui-col-xs-9 {
+				overflow-y: auto;
+				height: 100%;
+			}
+			
+			.mui-segmented-control .mui-control-item {
+				line-height: 50px;
+				width: 100%;
+			}
+			
+			.mui-control-content {
+				display: block;
+			}
+			
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				background-color: #fff;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
+			<h1 class="mui-title" style="color: #007AFF;">茉莉花店铺</h1>
+		</header>
+		<nav class="mui-bar mui-bar-tab ">
+			<label id="home_allnum" style="color: #CF2D28;">0</label>
+			<button class="mui-btn-danger mui-pull-right mui-card-content-inner">去结算</button>
+		</nav>
+		<div class="mui-content mui-row mui-fullscreen">
+			<div class="mui-col-xs-3">
+				<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+				</div>
+			</div>
+			<div id="segmentedControlContents" class="mui-col-xs-9" style="border-left: 1px solid #c8c7cc;">
+			</div>
+		</div>
+		<!--右上角弹出菜单-->
+		<div id="topPopover" class="mui-popover">
+			<div class="mui-scroll">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a href="#">订单</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="#">设置</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="#">其他</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="js/mui.min.js"></script>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		mui('.mui-popover').popover('toggle', document.getElementById("openPopover"));
+		mui('.mui-popover').popover('hide');
+		var controls = document.getElementById("segmentedControls");
+		var contents = document.getElementById("segmentedControlContents");
+		var html = [];
+		var i = 1,
+			j = 1,
+			m = 10, //左侧选项卡数量+1
+			n = 21; //每个选项卡列表数量+1
+		for(; i < m; i++) {
+			html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">选项' + i + '</a>');
+		}
+		controls.innerHTML = html.join('');
+		html = [];
+		for(i = 1; i < m; i++) {
+			html.push('<div id="content' + i + '" class="mui-control-content"><ul class="mui-table-view">');
+			for(j = 1; j < n; j++) {
+				html.push('<li class="mui-table-view-cell">第' + i + '个选项卡子项-' + j + '</li>');
+			}
+			html.push('</ul></div>');
+		}
+		contents.innerHTML = html.join('');
+		//默认选中第一个
+		controls.querySelector('.mui-control-item').classList.add('mui-active');
+		//			contents.querySelector('.mui-control-content').classList.add('mui-active');
+		(function() {
+			var controlsElem = document.getElementById("segmentedControls");
+			var contentsElem = document.getElementById("segmentedControlContents");
+			var controlListElem = controlsElem.querySelectorAll('.mui-control-item');
+			var contentListElem = contentsElem.querySelectorAll('.mui-control-content');
+			var controlWrapperElem = controlsElem.parentNode;
+			var controlWrapperHeight = controlWrapperElem.offsetHeight;
+			var controlMaxScroll = controlWrapperElem.scrollHeight - controlWrapperHeight; //左侧类别最大可滚动高度
+			var maxScroll = contentsElem.scrollHeight - contentsElem.offsetHeight; //右侧内容最大可滚动高度
+			var controlHeight = controlListElem[0].offsetHeight; //左侧类别每一项的高度
+			var controlTops = []; //存储control的scrollTop值
+			var contentTops = [0]; //存储content的scrollTop值
+			var length = contentListElem.length;
+			for(var i = 0; i < length; i++) {
+				controlTops.push(controlListElem[i].offsetTop + controlHeight);
+			}
+			for(var i = 1; i < length; i++) {
+				var offsetTop = contentListElem[i].offsetTop;
+				if(offsetTop + 100 >= maxScroll) {
+					var height = Math.max(offsetTop + 100 - maxScroll, 100);
+					var totalHeight = 0;
+					var heights = [];
+					for(var j = i; j < length; j++) {
+						var offsetHeight = contentListElem[j].offsetHeight;
+						totalHeight += offsetHeight;
+						heights.push(totalHeight);
+					}
+					for(var m = 0, len = heights.length; m < len; m++) {
+						contentTops.push(parseInt(maxScroll - (height - heights[m] / totalHeight * height)));
+					}
+					break;
+				} else {
+					contentTops.push(parseInt(offsetTop));
+				}
+			}
+			contentsElem.addEventListener('scroll', function() {
+				var scrollTop = contentsElem.scrollTop;
+				for(var i = 0; i < length; i++) {
+					var offsetTop = contentTops[i];
+					var offset = Math.abs(offsetTop - scrollTop);
+					//						console.log("i:"+i+",scrollTop:"+scrollTop+",offsetTop:"+offsetTop+",offset:"+offset);
+					if(scrollTop < offsetTop) {
+						if(scrollTop >= maxScroll) {
+							onScroll(length - 1);
+						} else {
+							onScroll(i - 1);
+						}
+						break;
+					} else if(offset < 20) {
+						onScroll(i);
+						break;
+					} else if(scrollTop >= maxScroll) {
+						onScroll(length - 1);
+						break;
+					}
+				}
+			});
+			var lastIndex = 0;
+			//监听content滚动
+			var onScroll = function(index) {
+				if(lastIndex !== index) {
+					lastIndex = index;
+					var lastActiveElem = controlsElem.querySelector('.mui-active');
+					lastActiveElem && (lastActiveElem.classList.remove('mui-active'));
+					var currentElem = controlsElem.querySelector('.mui-control-item:nth-child(' + (index + 1) + ')');
+					currentElem.classList.add('mui-active');
+					//简单处理左侧分类滚动，要么滚动到底，要么滚动到顶
+					var controlScrollTop = controlWrapperElem.scrollTop;
+					if(controlScrollTop + controlWrapperHeight < controlTops[index]) {
+						controlWrapperElem.scrollTop = controlMaxScroll;
+					} else if(controlScrollTop > controlTops[index] - controlHeight) {
+						controlWrapperElem.scrollTop = 0;
+					}
+				}
+			};
+			//滚动到指定content
+			var scrollTo = function(index) {
+				contentsElem.scrollTop = contentTops[index];
+			};
+			mui(controlsElem).on('tap', '.mui-control-item', function(e) {
+				scrollTo(this.getAttribute('data-index'));
+				return false;
+			});
+		})();
+	</script>
+
+</html>
+
+
+
+
+
+
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
+			<h1 class="mui-title" style="color: #007AFF;">茉莉花店铺</h1>
+		</header>
+		<div class="mui-content" id="addtxt">
+
+			<ul class="mui-table-view" id="table_view">
+				<li class="mui-table-view-cell mui-media">
+					<div class="mui-row">
+						<div class="mui-col-sm-9">
+							<img class="mui-media-object mui-pull-left" src="img/xhscjd.png">
+							<p class='mui-ellipsis'>西红柿炒鸡蛋</p>
+						</div>
+						<div class="mui-col-sm-3">
+							<div class="mui-numbox mui-pull-right" data-numbox-min='0' data-numbox-max='9'>
+								<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+								<input class="mui-input-numbox" type="number" />
+								<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<button class="mui-btn-danger mui-pull-right mui-card-content-inner" onclick="toScale()">去结算</button>
+			<div id="topPopover" class="mui-popover">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a href="#">首页</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="#">订单信息</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="#">设置</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui.init();
+
+			mui.getJSON('json/good.json', null, function(data) {
+				var tableView = document.getElementById("table_view");
+				var fragment = document.createDocumentFragment();
+				var newline;
+				var backcode = data.back_code;
+				console.log(backcode);
+				mui.each(data.typeslist, function(index, item) {
+					var name = item.name;
+					var itemarray = item.arraylist;
+					mui.each(itemarray, function(index, item) {
+						var goodname = item.goodName;
+						var goodid = item.id;
+						newline = document.createElement('li');
+						newline.setAttribute("class", "mui-table-view-cell mui-media");
+						newline.setAttribute("value", goodid);
+						var sssss = '<div class="mui-row">' +
+							'<div class="mui-col-sm-9">' +
+							'<img class="mui-media-object mui-pull-left" src="img/xhscjd.png">' +
+							'<div class="mui-media-body">' + (goodname) +
+							'</div></div>' +
+							'<div class="mui-col-sm-3">' +
+							'<input class="mui-input-numbox" type="number"/>' +
+							'</div></div>'
+						newline.innerHTML = sssss;
+						fragment.appendChild(newline);
+					});
+
+				});
+				tableView.appendChild(fragment);
+			});
+			mui('.mui-popover').popover('toggle', document.getElementById("openPopover"));
+			mui('.mui-popover').popover('hide');
+
+			function toScale() {
+				mui(".mui-content input").each(function(index, item) {
+					var parentview = item.parentElement.value;
+					var num = this.value;
+					if(num > 0)
+						console.log("num:" + num + "  value:" + parentview);
+				});
+
+			}
+		</script>
+	</body>
+
+</html>
